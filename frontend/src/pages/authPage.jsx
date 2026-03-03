@@ -89,8 +89,7 @@ function AuthPage() {
                                     <option value='default' disabled>--Select Your Role--</option>
                                     <option key='Owner/Manager' value='Owner/Manager'>Owner/Manager</option>
                                     <option key='Supervisor' value='Supervisor'>Supervisor</option>
-                                    <option key='StoreKeeper' value='StoreKeeper'>StoreKeeper</option>
-                                    <option key='Accountant' value='Accountant'>Accountant</option>
+                                    <option key='ShopKeeper' value='ShopKeeper'>ShopKeeper</option>
                                 </select>
                             </div>
 

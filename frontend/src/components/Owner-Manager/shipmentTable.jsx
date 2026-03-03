@@ -50,7 +50,7 @@ function ShipmentTable() {
 
                 {location.pathname === `/users/${user?.role}/shipments` && (
                     <Link to={`/users/${user?.role}`}>
-                        <button className='flex items-center justify-center text-black text-sm hover:cursor-pointer hover:shadow-accent-foreground rounded-lg'>
+                        <button className='flex items-center justify-center text-black text-sm hover:cursor-pointer hover:underline hover:shadow-accent-foreground rounded-lg'>
                             <ArrowLeft size='14'/> Go Back
                         </button>
                     </Link>
