@@ -25,30 +25,30 @@ const StatusPill = ({ status }) => {
 
 function RequestsTable() {
     return (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                <h3 className="font-bold text-slate-800">My Material Requests</h3>
+        <div className='bg-white rounded-xl border border-slate-200 shadow-sm overflow-scroll'>
+            <div className='p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center'>
+                <h3 className='font-bold text-slate-800'>My Material Requests</h3>
             </div>
       
-            <table className="w-full text-center">
-                <thead className="bg-slate-50 text-[11px] uppercase text-slate-500 font-bold tracking-wider">
+            <table className='w-full text-center'>
+                <thead className='bg-slate-50 text-[11px] uppercase text-slate-500 font-bold tracking-wider'>
                     <tr>
-                        <th className="p-4">Request ID</th>
-                        <th className="p-4">Material</th>
-                        <th className="p-4">Quantity</th>
-                        <th className="p-4">Status</th>
-                        <th className="p-4 text-right">Date Raised</th>
+                        <th className='p-4'>Request ID</th>
+                        <th className='p-4'>Material</th>
+                        <th className='p-4'>Quantity</th>
+                        <th className='p-4'>Status</th>
+                        <th className='p-4 text-right'>Date Raised</th>
                     </tr>
                 </thead>
         
-                <tbody className="divide-y divide-slate-100">
+                <tbody className='divide-y divide-slate-100'>
                     {myRequests.map((req) => (
-                        <tr key={req.id} className="hover:bg-slate-50/30 transition-colors text-sm">
-                            <td className="p-4 font-mono font-bold text-primary">{req.id}</td>
-                            <td className="p-4 font-semibold text-slate-700">{req.item}</td>
-                            <td className="p-4 text-slate-600">{req.qty}</td>
-                            <td className="p-4"><StatusPill status={req.status} /></td>
-                            <td className="p-4 text-right text-slate-400">{req.date}</td>
+                        <tr key={req.id} className='hover:bg-slate-50/30 transition-colors text-sm'>
+                            <td className='p-4 font-mono font-bold text-primary'>{req.id}</td>
+                            <td className='p-4 font-semibold text-slate-700'>{req.item}</td>
+                            <td className='p-4 text-slate-600'>{req.qty}</td>
+                            <td className='p-4'><StatusPill status={req.status} /></td>
+                            <td className='p-4 text-right text-slate-400'>{req.date}</td>
                         </tr>
                     ))}
                 </tbody>

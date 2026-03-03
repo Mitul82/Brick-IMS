@@ -11,13 +11,13 @@ function ShopKeeperLayout() {
                     <div className='flex h-10 justify-end-safe gap-4'>
                         <Link to='/users/ShopKeeper/inward'>
                             <button className={location.pathname === '/users/ShopKeeper/inward' ?  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 hover:cursor-pointer hover:text-foreground h-9 rounded-md px-3 underline' : 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 hover:underline hover:text-foreground hover:cursor-pointer h-9 rounded-md px-3'}>
-                                Inward(Receipt)
+                                Recevied
                             </button>
                         </Link>
 
                         <Link to='/users/ShopKeeper/outward'>
                             <button className={location.pathname === '/users/ShopKeeper/outward' ?  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 hover:cursor-pointer hover:text-foreground h-9 rounded-md px-3 underline' : 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 hover:underline hover:text-foreground hover:cursor-pointer h-9 rounded-md px-3'}>
-                                Outward(Issuance)
+                                Sent
                             </button>
                         </Link>
 

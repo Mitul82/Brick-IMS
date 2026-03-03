@@ -19,7 +19,7 @@ function InwardEntryForm() {
     }
 
     return (
-        <div className='bg-white p-6 rounded-xl border border-slate-200 shadow-sm mx-5 mt-6'>
+        <div className='bg-white p-2 md:p-4 rounded-xl'>
             <div className='flex items-center gap-2 mb-6 text-slate-800'>
                 <div className='p-2 bg-orange-100 rounded-lg text-orange-600'>
                     <Truck size={20} />
@@ -45,11 +45,11 @@ function InwardEntryForm() {
                     </div>
                     <div className='flex gap-2'>
                         <input name='quantity' value={formData.quantity} onChange={handleInputChange} type='number' placeholder='Net Weight' className='flex-1 p-2 text-sm bg-slate-50 border rounded-lg text-primary' />
-                        <div className='p-2 bg-slate-100 rounded text-slate-500'><Scale size={18}/></div>
+                        <div className='hidden sm:flex p-2 bg-slate-100 rounded text-slate-500 items-center justify-center'><Scale size={18}/></div>
                     </div>
                 </div>
 
-                <div className='md:col-span-3'>
+                <div className='md:col-span-3 pt-2'>
                     <button type='submit' className='w-full py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/85 hover:cursor-pointer shadow-md transition-all'>
                         Confirm & Add to Inventory
                     </button>

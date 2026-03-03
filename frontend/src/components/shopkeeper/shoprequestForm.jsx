@@ -30,12 +30,12 @@ function QuickRequestForm() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor='type' className='block text-[10px] font-bold text-slate-400 uppercase mb-1'>Material Required</label>
-                    <input name='type' value={formData.type} placeholder='Eg. Coal' type='text' className='w-full p-2 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-orange-500'/>
+                    <input name='type' value={formData.type} onChange={handleInputChange} placeholder='Eg. Coal' type='text' className='w-full p-2 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-orange-500'/>
                 </div>
 
                 <div>
                     <label htmlFor='quantity' className='block text-[10px] font-bold text-slate-400 uppercase mb-1'>Desired Quantity</label>
-                    <input name='quantity' value={formData.quantity} type='number' placeholder='Enter Amount (in Kg)' className='w-full p-2 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-orange-500'/>
+                    <input name='quantity' value={formData.quantity} type='number' onChange={handleInputChange} placeholder='Enter Amount (in Kg)' className='w-full p-2 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-orange-500'/>
                 </div>
 
                 <button type='submit' className='w-full py-2.5 bg-slate-900 text-white text-xs font-bold rounded-lg hover:cursor-pointer hover:bg-black transition-all flex items-center justify-center gap-2 shadow-md mt-4'>

@@ -7,12 +7,12 @@ import ShipmentTable from '../../components/Owner-Manager/shipmentTable.jsx';
 function Supervisor() {
     return (
         <div className='flex flex-col mt-8'>
-            <div className='flex flex-grid gap-4 rounded-md ml-5 mr-5 justify-evenly items-center'>
-                <div className='bg-card p-6 rounded-md w-3xl h-xl'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 ml-5 mr-5'>
+                <div className='bg-card p-6 rounded-md w-full h-xl'>
                     <MetricCard title='Shift progress' value='45%' trend={null} icon={TrendingUp} color='bg-primary'/>
                 </div>
 
-                <div className='bg-card p-6 rounded-md w-3xl h-xl'>
+                <div className='bg-card p-6 rounded-md w-full h-xl'>
                     <MetricCard title='Shipped today' value='5' trend={null} icon={Truck} color='bg-primary'/>
                 </div>
             </div>
@@ -23,7 +23,7 @@ function Supervisor() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Supervisor;

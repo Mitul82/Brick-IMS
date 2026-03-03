@@ -19,7 +19,7 @@ function IssuanceForm() {
     }
 
     return (
-        <div className='bg-white p-6 rounded-xl border border-slate-200 shadow-sm mx-5 mt-6'>
+        <div className='bg-white p-2 md:p-4 rounded-xl'>
             <div className='flex items-center gap-2 mb-6 text-slate-800'>
                 <div className='p-2 bg-primary rounded-lg text-secondary'>
                     <PackageOpen size={20} />
@@ -65,7 +65,7 @@ function IssuanceForm() {
                     </div>
                 </div>
 
-                <div className='md:col-span-3'>
+                <div className='md:col-span-3 pt-2'>
                     <button className='w-full py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 hover:cursor-pointer shadow-md transition-all flex items-center justify-center gap-2'>
                         <Send size={18} /> Process Issuance & Deduct Stock
                     </button>

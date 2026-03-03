@@ -7,7 +7,7 @@ import ReceiptTable from '../../components/shopkeeper/receiptTable.jsx';
 function ReceiptPage() {
     return (
         <div className='flex flex-col'>
-            <div className='flex flex-col items-center justify-center mt-8 ml-5 mr-5 mb-8'>
+            <div className='flex flex-col items-center justify-center mt-4 md:mt-8 px-4 md:px-8 mb-8'>
                 <div className='bg-card p-10 rounded-lg w-full'>
                     <InwardEntryForm/>
                 </div>

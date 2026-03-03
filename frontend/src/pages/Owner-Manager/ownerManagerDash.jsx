@@ -18,8 +18,8 @@ const approvals = [
 
 function OwnerManager() {
     return (
-        <div className='flex flex-col mt-8'>
-            <div className='flex flex-grid gap-4 rounded-md ml-5 justify-evenly items-center'>
+        <div className='flex flex-col mt-4 md:mt-8 px-4 md:px-5'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
                 <div className='bg-card p-6 rounded-md h-xl'>
                     <MetricCard title='Production Today' value='12,500' trend='+12%' icon={BrickWall} color='bg-primary'/>
                 </div>
@@ -43,7 +43,9 @@ function OwnerManager() {
 
             <div className='flex flex-col items-center justify-center mt-5 ml-4 mr-4'>
                 <div className='bg-card p-10 rounded-lg w-full'>
-                    <OwnerChart/>
+                    <div className='w-full overflow-x-auto'>
+                        <OwnerChart/>
+                    </div>
                 </div>
             </div>
 
