@@ -1,18 +1,23 @@
 import './index.css';
 
 import React from 'react';
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 import Layout from './components/layouts/layout.jsx';
 
 import AuthPage from './pages/authPage.jsx';
+import ShipmentsPage from './pages/shipmentsPage.jsx';
+
+import OwnerManager from './pages/Owner-Manager/ownerManagerDash.jsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
     <Route path='/' element={ <AuthPage/> }/>
     <Route path='/users' element={ <Layout/> }>
-      <Route path='Owner/Manager' element={ <h1>manager dash</h1> }>
+      <Route path='Owner/Manager' element={ <Outlet/> }>
+        <Route index element={ <OwnerManager/> }/>
+        <Route path='shipments' element={ <ShipmentsPage/> }/>
       </Route>
       <Route path='Supervisor' element={ <h1>supervisor dash</h1> }>
       </Route>

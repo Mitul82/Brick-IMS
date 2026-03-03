@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (userData) => {
         try {
-            const { data } = await axios.post('/api/auth/login', userData);
+            const { data } = await axios.post('/api/auth/signup', userData);
 
             if(data.success) {
                 setUser(data.userData);

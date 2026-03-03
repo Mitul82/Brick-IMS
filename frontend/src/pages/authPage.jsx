@@ -7,10 +7,11 @@ import { AuthContext } from '../contexts/authContext.jsx';
 
 function AuthPage() {
     const [loading, setLoading] = React.useState(false);
+    const [mode, setMode] = React.useState('login');
     const [formData, setFormData] = React.useState({ name: '', email: '', password: '', role: 'default' });
 
-    const [searchParams] = useSearchParams();
-    const mode = searchParams.get('mode') || 'login';
+    // const [searchParams] = useSearchParams();
+    // const mode = searchParams.get('mode') || 'login';
 
     const { login, signup, user } = React.useContext(AuthContext);
     const navigate = useNavigate();
@@ -100,7 +101,7 @@ function AuthPage() {
                                     <label htmlFor='name' className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
                                         Full Name
                                     </label>
-                                    <input type='text' id='name' name='name' value={formData.name} onChange={handleInputChange} required placeholder='John Doe' className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'/>
+                                    <input type='text' id='name' name='name' value={formData.name} onChange={handleInputChange} required placeholder='John Doe' className='flex h-10 text-muted-foreground w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'/>
                                 </div>
                             )}
 
@@ -108,14 +109,14 @@ function AuthPage() {
                                 <label htmlFor='email' className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
                                     Email
                                 </label>
-                                <input type='email' id='email' name='email' value={formData.email} onChange={handleInputChange} required placeholder='ABC@example.com' className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'/>
+                                <input type='email' id='email' name='email' value={formData.email} onChange={handleInputChange} required placeholder='ABC@example.com' className='flex h-10 text-muted-foreground w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'/>
                             </div>
 
                             <div className='space-y-2'>
                                 <label htmlFor='email' className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
                                     Password
                                 </label>
-                                <input type='password' id='password' name='password' value={formData.password} onChange={handleInputChange} required placeholder='••••••••' className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'/>
+                                <input type='password' id='password' name='password' value={formData.password} onChange={handleInputChange} required placeholder='••••••••' className='flex h-10 text-muted-foreground w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm'/>
                             </div>
 
                             <button type='submit' size='h-12 rounded-lg px-8 text-base' disabled={loading} className='mb-6 mt-4 inline-flex w-full items-center justify-center gap-2 whitespace-nowrap bg-primary text-secondary hover:bg-primary/90 shadow-glow hover:shadow-[0_0_40px_hsl(38_92%_50%/0.3)] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50s p-2.5 hover:cursor-pointer rounded-2xl'>
@@ -127,14 +128,14 @@ function AuthPage() {
                             {mode === 'login' ? (
                                 <p className='text-background'>
                                     Don't have an account?{' '}
-                                    <button type='button' onClick={() => navigate('?mode=signup')} className='text-background hover:underline hover:cursor-pointer font-medium'>
+                                    <button type='button' onClick={() => setMode('signup')} className='text-background hover:underline hover:cursor-pointer font-medium'>
                                         Sign up
                                     </button>
                                 </p>
                             ) : (
                                 <p className='text-background'>
                                     Already have an account?{' '}
-                                    <button type='button' onClick={() => navigate('?mode=login')} className='text-background hover:underline hover:cursor-pointer font-medium'>
+                                    <button type='button' onClick={() => setMode('login')} className='text-background hover:underline hover:cursor-pointer font-medium'>
                                         Sign in
                                     </button>
                                 </p>

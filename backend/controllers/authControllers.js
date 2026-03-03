@@ -8,7 +8,7 @@ const login = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Missing Information' });
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select('+password');
 
         if(!user) {
             return res.status(400).json({ success: false, message: 'No account with the entered email found, please create a account' });
