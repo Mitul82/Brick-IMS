@@ -5,34 +5,36 @@ import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, O
 import { Toaster } from 'react-hot-toast';
 
 import Layout from './components/layouts/layout.jsx';
+import SupervisorLayout from './components/layouts/supervisorLayout.jsx';
 
 import AuthPage from './pages/authPage.jsx';
 import ShipmentsPage from './pages/shipmentsPage.jsx';
+import InventoryPage from './pages/Supervisor/inventoryPage.jsx';
+import ProductionPage from './pages/Supervisor/productionPage.jsx';
+import DispatchPage from './pages/Supervisor/dispatchPage.jsx';
 
 import OwnerManager from './pages/Owner-Manager/ownerManagerDash.jsx';
+import Supervisor from './pages/Supervisor/supervisorDash.jsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
     <Route path='/' element={ <AuthPage/> }/>
     <Route path='/users' element={ <Layout/> }>
-      <Route path='Owner/Manager' element={ <Outlet/> }>
-        <Route index element={ <OwnerManager/> }/>
-        <Route path='shipments' element={ <ShipmentsPage/> }/>
-      </Route>
-      <Route path='Supervisor' element={ <h1>supervisor dash</h1> }>
-      </Route>
-      <Route path='StoreKeeper' element={ <h1>storekeeper dash</h1> }>
-      </Route>
-      <Route path='Accountant' element={ <h1>accountant dash</h1> }>
-      </Route>
-      {/* <Route path='Manager' element={ <ManagerLayout/> }>
-      </Route>
-      <Route path='Supervisor' element={ <SupervisorLayout/> }>
-      </Route>
-      <Route path='StoreKeeper' element={ <StoreLayout/> }>
-      </Route>
-      <Route path='Accountant' element={ <AccountantLayout/> }>
-      </Route> */}
+        <Route path='Owner/Manager' element={ <Outlet/> }>
+            <Route index element={ <OwnerManager/> }/>
+            <Route path='shipments' element={ <ShipmentsPage/> }/>
+        </Route>
+        <Route path='Supervisor' element={ <SupervisorLayout/> }>
+            <Route index element={ <Supervisor/> }/>
+            <Route path='shipments' element={ <ShipmentsPage/> }/>
+            <Route path='production' element={ <ProductionPage/> }/>
+            <Route path='inventory' element={ <InventoryPage/> }/>
+            <Route path='dispatch' element={ <DispatchPage/> }/>
+        </Route>
+        <Route path='StoreKeeper' element={ <h1>storekeeper dash</h1> }>
+        </Route>
+        <Route path='Accountant' element={ <h1>accountant dash</h1> }>
+        </Route>
     </Route>
   </>
 ));

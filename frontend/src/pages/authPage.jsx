@@ -6,12 +6,10 @@ import { User, Store, BrickWall } from 'lucide-react';
 import { AuthContext } from '../contexts/authContext.jsx';
 
 function AuthPage() {
+    const [searchParams] = useSearchParams();
     const [loading, setLoading] = React.useState(false);
-    const [mode, setMode] = React.useState('login');
+    const [mode, setMode] = React.useState(searchParams.get('mode') || 'login');
     const [formData, setFormData] = React.useState({ name: '', email: '', password: '', role: 'default' });
-
-    // const [searchParams] = useSearchParams();
-    // const mode = searchParams.get('mode') || 'login';
 
     const { login, signup, user } = React.useContext(AuthContext);
     const navigate = useNavigate();
@@ -77,7 +75,7 @@ function AuthPage() {
                             {mode === 'login' ? 'Welcome back' : 'Create an Account'}
                         </h3>
                         <p className=''>
-                            {mode === 'login' ? 'Sign in to manage your bookings' : 'Get started with SeatNow today'}
+                            {mode === 'login' ? 'Sign in to manage your business' : 'Get started with Brick Portal today'}
                         </p>
                     </div>
 

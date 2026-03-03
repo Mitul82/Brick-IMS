@@ -42,7 +42,7 @@ function ShipmentTable() {
         <div className='bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden'>
             <div className='p-5 border-b border-slate-50 flex justify-between items-center'>
                 <h3 className='font-bold text-slate-800 text-lg'>Active Shipments</h3>
-                <Link to='/users/Owner/Manager/shipments'>
+                <Link to={`/users/${user?.role}/shipments`}>
                     <button className='text-sm text-blue-600 font-medium hover:underline hover:cursor-pointer'>
                         {location.pathname === `/users/${user?.role}/shipments` ? '' : 'View All Dispatches'}
                     </button>
