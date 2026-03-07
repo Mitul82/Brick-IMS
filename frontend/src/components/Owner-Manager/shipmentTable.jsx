@@ -4,12 +4,12 @@ import { MapPin, AlertTriangle, Clock, CheckCircle, Truck, ArrowLeft } from 'luc
 
 import { AuthContext } from '../../contexts/authContext';
 
-const shipments = [
-    { id: 'SH-4021', customer: 'Build-Right Const.', site: 'Sector 62, Noida', quantity: '5000', status: 'In-Transit', driver: 'Rajesh' },
-    { id: 'SH-4022', customer: 'Shivaay Bricks', site: 'Knowledge Park', quantity: '2500', status: 'Delivered', driver: 'Amit' },
-    { id: 'SH-4023', customer: 'Global Infra', site: 'Greater Noida West', quantity: '10000', status: 'Loading', driver: 'Vikram' },
-    { id: 'SH-4024', customer: 'Metro Project', site: 'Alpha 1', quantity: '7500', status: 'Delayed', driver: 'Suresh' },
-];
+// const shipments = [
+//     { id: 'SH-4021', customer: 'Build-Right Const.', site: 'Sector 62, Noida', quantity: '5000', status: 'In-Transit', driver: 'Rajesh' },
+//     { id: 'SH-4022', customer: 'Shivaay Bricks', site: 'Knowledge Park', quantity: '2500', status: 'Delivered', driver: 'Amit' },
+//     { id: 'SH-4023', customer: 'Global Infra', site: 'Greater Noida West', quantity: '10000', status: 'Loading', driver: 'Vikram' },
+//     { id: 'SH-4024', customer: 'Metro Project', site: 'Alpha 1', quantity: '7500', status: 'Delayed', driver: 'Suresh' },
+// ];
 
 const StatusBadge = ({ status }) => {
     const styles = {
@@ -33,10 +33,12 @@ const StatusBadge = ({ status }) => {
     );
 };
 
-function ShipmentTable() {
+function ShipmentTable({ loading, shipments }) {
     const location = useLocation();
 
     const { user } = React.useContext(AuthContext);
+
+    if (loading) return <div className='text-black p-10'>Loading Supervisor Dashboard...</div>;
 
     return (
         <div className='bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden'>
@@ -69,20 +71,20 @@ function ShipmentTable() {
                         </tr>
                     </thead>
                     <tbody className='divide-y divide-slate-100'>
-                        {shipments.map((item) => (
-                            <tr key={item.id} className='hover:bg-slate-50/50 transition-colors'>
-                                <td className='p-4 text-sm font-medium text-slate-900'>{item.id}</td>
-                                <td className='p-4 flex flex-col items-center justify-center text-center'>
-                                    <div className='text-sm font-semibold text-slate-900'>{item.customer}</div>
-                                        <div className='text-xs text-slate-500 flex items-center gap-1'>
-                                            <MapPin size={12} /> {item.site}
-                                        </div>
-                                </td>
-                                <td className='p-4 text-sm text-slate-600'>{item.quantity} Bricks</td>
-                                <td className='p-4 text-sm text-slate-600 font-medium'>{item.driver}</td>
-                                <td className='p-4'><StatusBadge status={item.status} /></td>
-                            </tr>
-                        ))}
+                        {shipments?.map((item) => (
+                                <tr key={item.id} className='hover:bg-slate-50/50 transition-colors'>
+                                    <td className='p-4 text-sm font-medium text-slate-900'>{item.id}</td>
+                                    <td className='p-4 flex flex-col items-center justify-center text-center'>
+                                        <div className='text-sm font-semibold text-slate-900'>{item.customer}</div>
+                                            <div className='text-xs text-slate-500 flex items-center gap-1'>
+                                                <MapPin size={12} /> {item.site}
+                                            </div>
+                                    </td>
+                                    <td className='p-4 text-sm text-slate-600'>{item.quantity} Bricks</td>
+                                    <td className='p-4 text-sm text-slate-600 font-medium'>{item.driver}</td>
+                                    <td className='p-4'><StatusBadge status={item.status} /></td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>

@@ -1,25 +1,25 @@
 import React from 'react';
-import { TrendingUp, Truck,  } from 'lucide-react';
+import { useLoaderData } from 'react-router-dom';
+import { TrendingUp, Truck } from 'lucide-react';
 
-import MetricCard from '../../components/Owner-Manager/metricCard.jsx';
 import ShipmentTable from '../../components/Owner-Manager/shipmentTable.jsx';
 
+import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
+
 function Supervisor() {
+    const [loading, setLoading] = React.useState(true);
+    const { shipments, getShipments } = React.useContext(SupervisorContext);
+
+    React.useEffect(() => {
+        getShipments();
+        setLoading(false);
+    }, []);
+
     return (
         <div className='flex flex-col mt-8'>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 ml-5 mr-5'>
-                <div className='bg-card p-6 rounded-md w-full h-xl'>
-                    <MetricCard title='Shift progress' value='45%' trend={null} icon={TrendingUp} color='bg-primary'/>
-                </div>
-
-                <div className='bg-card p-6 rounded-md w-full h-xl'>
-                    <MetricCard title='Shipped today' value='5' trend={null} icon={Truck} color='bg-primary'/>
-                </div>
-            </div>
-
             <div className='flex flex-col items-center justify-center mt-8 ml-5 mr-5 mb-8'>
                 <div className='bg-card p-10 rounded-lg w-full'>
-                    <ShipmentTable/>
+                    <ShipmentTable shipments={shipments}/>
                 </div>
             </div>
         </div>

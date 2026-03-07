@@ -17,7 +17,7 @@ const authRoute = async (req, res, next) => {
         req.user = { id, role };
 
         next();
-    } catch (error) {
+    } catch (err) {
         console.error(err);
         return res.status(400).json({ success: false, message: 'You are not authorized to access this route' });
     }

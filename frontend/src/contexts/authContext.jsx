@@ -6,31 +6,24 @@ axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
 export const AuthContext = React.createContext(null);
 
+const savedToken = localStorage.getItem('token');
+const savedUser = localStorage.getItem('userDetails');
+
+if(savedToken) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
+}
+
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = React.useState(null);
-    const [token, setToken] = React.useState(localStorage.getItem('token'));
-
-    React.useEffect(() => {
-        const storedToken = localStorage.getItem('token');
-        const storedUserDetails = localStorage.getItem('userDetails');
-
-        if(storedToken && storedUserDetails) {
-            try {
-                const userData = JSON.parse(storedUserDetails);
-
-                setUser(userData);
-                setToken(storedToken);
-
-                axios.defaults.headers.common['token'] = storedToken;
-            } catch (err) {
-                console.error('Failed to parse stored user details: ', err);
-                localStorage.removeItem('userDetails');
-                localStorage.removeItem('token');
-            }
+    const [token, setToken] = React.useState(savedToken);
+    const [user, setUser] = React.useState(() => {
+        try {
+            return savedUser ? JSON.parse(savedUser) : null
+        } catch(err) {
+            return null;
         }
-    }, []);
+    });
 
-    const login = async (userData) => {
+    const login = React.useCallback(async (userData) => {
         try {
             const { data } = await axios.post('/api/auth/login', userData);
 
@@ -40,6 +33,8 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('userDetails', JSON.stringify(data.userData));
 
                 setToken(data.token);
+
+                axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
 
                 localStorage.setItem('token', data.token);
 
@@ -58,9 +53,9 @@ export const AuthProvider = ({ children }) => {
 
             return false;
         }
-    }
+    });
 
-    const signup = async (userData) => {
+    const signup = React.useCallback(async (userData) => {
         try {
             const { data } = await axios.post('/api/auth/signup', userData);
 
@@ -70,6 +65,8 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('userDetails', JSON.stringify(data.userData));
 
                 setToken(data.token);
+
+                axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
 
                 localStorage.setItem('token', data.token);
 
@@ -88,9 +85,9 @@ export const AuthProvider = ({ children }) => {
 
             return false;
         }
-    }
+    });
 
-    const logout = async () => {
+    const logout = React.useCallback(async () => {
         try {
             setUser(null);
 
@@ -100,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 
             localStorage.removeItem('userDetails');
 
-            axios.defaults.headers.common['token'] = null;
+            axios.defaults.headers.common['Authorization'] = null;
 
             toast.success('Logged out successfully');
         } catch (err) {
@@ -108,14 +105,14 @@ export const AuthProvider = ({ children }) => {
             
             toast.error('Error in logging out');
         }
-    }
+    });
 
-    const value = {
+    const value = React.useMemo(() => ({
         axios,
         token, user,
         setToken, setUser,
         login, signup, logout
-    }
+    }));
 
     return (
         <AuthContext.Provider value={ value }>

@@ -24,13 +24,13 @@ const login = async (req, res) => {
             return res.status(400).json({ success: false, message: 'The entered password is wrong' });
         }
 
-        const token = user.createJWT();
+        const token = await user.createJWT();
 
         const resUser = user.toObject();
 
         resUser.password = undefined;
 
-        res.status(200).json({ success: true, token, userData: resUser, message: 'Logged in succefully' });
+        res.status(200).json({ success: true, token, userData: resUser, message: 'Logged in successfully' });
     } catch (err) {
         console.error(err);
     }

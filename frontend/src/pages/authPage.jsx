@@ -29,7 +29,7 @@ function AuthPage() {
                 const success = await login(formData);
 
                 if(success) {
-                    navigate(`/users/${user.role}`);
+                    navigate(`/users/${user?.role}`);
                 }
 
                 return;

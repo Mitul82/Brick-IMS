@@ -1,12 +1,14 @@
 import React from 'react';
 import { Clock, CheckCircle2, XCircle, PackageCheck, User } from 'lucide-react';
 
-const raisedRequests = [
-    { id: 'REQ-101', item: 'Coal (Grade A)', qty: '5 Tons', date: '2026-03-01', status: 'Pending', requestedBy: 'Supervisor Anil' },
-    { id: 'REQ-098', item: 'Portland Cement', qty: '50 Bags', date: '2026-02-28', status: 'Approved', requestedBy: 'Supervisor Anil' },
-    { id: 'REQ-095', item: 'Fine Sand', qty: '2 Trucks', date: '2026-02-25', status: 'Approved', requestedBy: 'Supervisor Anil' },
-    { id: 'REQ-092', item: 'Additives', qty: '10 Liters', date: '2026-02-24', status: 'Rejected', requestedBy: 'Supervisor Anil' },
-];
+import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
+
+// const raisedRequests = [
+//     { id: 'REQ-101', item: 'Coal (Grade A)', qty: '5 Tons', date: '2026-03-01', status: 'Pending', requestedBy: 'Supervisor Anil' },
+//     { id: 'REQ-098', item: 'Portland Cement', qty: '50 Bags', date: '2026-02-28', status: 'Approved', requestedBy: 'Supervisor Anil' },
+//     { id: 'REQ-095', item: 'Fine Sand', qty: '2 Trucks', date: '2026-02-25', status: 'Approved', requestedBy: 'Supervisor Anil' },
+//     { id: 'REQ-092', item: 'Additives', qty: '10 Liters', date: '2026-02-24', status: 'Rejected', requestedBy: 'Supervisor Anil' },
+// ];
 
 const RequestStatus = ({ status }) => {
     const config = {
@@ -24,7 +26,15 @@ const RequestStatus = ({ status }) => {
 }
 
 function InventoryPage() {
-    const [formData, setFormData] = React.useState({ material: '', quantity: '', reason: null });
+    const [formData, setFormData] = React.useState({ material: '', quantity: '', reason: '' });
+    const [submit, setSubmit] = React.useState(false);
+
+    const { getRequests, sendRequest, requests } = React.useContext(SupervisorContext);
+
+    React.useEffect(() => {
+        getRequests();
+    }, [submit]);
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -36,8 +46,17 @@ function InventoryPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        console.log('create supervisor context and send post req to backend');
+        
+        try {
+            const success = await sendRequest(formData);
+
+            if(success) {
+                setSubmit(true);
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     return (
@@ -48,7 +67,7 @@ function InventoryPage() {
                     <div className='space-y-4'>
                         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                             <input type='text' name='material' value={formData.material} onChange={handleInputChange} placeholder='Material Needed' className='text-primary w-full p-2 border rounded-lg text-sm' />
-                            <input type='text' name='quantity' value={formData.quantity} onChange={handleInputChange} placeholder='Quantity Needed (in KG/Liters)' className='text-primary w-full p-2 border rounded-lg text-sm' />
+                            <input type='number' name='quantity' value={formData.quantity} onChange={handleInputChange} placeholder='Quantity Needed (in KG/Liters)' className='text-primary w-full p-2 border rounded-lg text-sm' />
                             <textarea name='reason' value={formData.reason} onChange={handleInputChange} placeholder='Reason/Urgency (Optional)' className='text-primary w-full p-2 border rounded-lg text-sm' rows='2' />
                             <button type='submit' className='w-full py-2 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700 hover:cursor-pointer'>
                                 Send to Manager for Approval
@@ -76,11 +95,11 @@ function InventoryPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 text-sm">
-                            {raisedRequests.map((req) => (
+                            {requests?.map((req) => (
                                 <tr key={req.id} className="hover:bg-slate-50/50 transition-colors">
-                                    <td className="p-4 font-mono font-medium text-blue-600">{req.id}</td>
-                                    <td className="p-4 font-semibold text-slate-700">{req.item}</td>
-                                    <td className="p-4 text-slate-600">{req.qty}</td>
+                                    <td className="p-4 font-mono font-medium text-blue-600">{req._id}</td>
+                                    <td className="p-4 font-semibold text-slate-700">{req.material}</td>
+                                    <td className="p-4 text-slate-600">{req.quantity}</td>
                                     <td className="p-4 text-slate-500">{req.date}</td>
                                     <td className="p-4"><RequestStatus status={req.status} /></td>
                                     <td className="p-4 text-right">

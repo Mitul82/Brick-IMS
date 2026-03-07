@@ -1,71 +1,94 @@
 import React from 'react';
 
-import ProductionForm from '../../components/Supervisor/productionForm';
-
-const batches = [
-    { id: 'B-105', type: 'Standard Clay', qty: 5300, waste: 150, stage: 'Ready', lastUpdate: '2h ago' },
-    { id: 'B-106', type: 'Fly Ash', qty: 4800, waste: 0, stage: 'Firing', lastUpdate: 'Just now' },
-    { id: 'B-107', type: 'Standard Clay', qty: 5000, waste: 0, stage: 'Drying', lastUpdate: '5h ago' },
-];
-
-const StageBadge = ({ stage }) => {
-    const styles = {
-        'Ready': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-        'Firing': 'bg-red-50 text-red-700 border-red-200',
-        'Drying': 'bg-blue-50 text-blue-700 border-blue-200',
-    }
-
-    return (
-        <span className={`px-2 py-1 rounded-md text-[11px] font-bold border ${styles[stage] || 'bg-slate-100'}`}>
-            {stage.toUpperCase()}
-        </span>
-    );
-}
+import ProductionTable from '../../components/Supervisor/productionTable.jsx';
+import { SupervisorContext } from '../../contexts/SupervisorContext';
 
 function ProductionPage() {
+    const [formData, setFormData] = React.useState({ batchId: '', type: '', produced: '', wastage: '' });
+    const [submit, setSubmit] = React.useState(false);
+
+    const { sendProduction, getProduction, production } = React.useContext(SupervisorContext);
+
+    React.useEffect(() => {
+        getProduction();
+    }, [submit]);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+            setFormData(prev => ({
+              ...prev,
+              [name]: value,
+        }));
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const success = await sendProduction(formData);
+
+            if(success) {
+                setSubmit(true);
+                return;
+            }
+
+            return false;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+ 
     return (
         <div className='flex flex-col'>
             <div className='bg-card ml-4 mr-4 p-6 rounded-xl shadow-sm'>
-               <ProductionForm/>
+               <div className='bg-white p-6 rounded-xl border border-slate-200 shadow-sm'>
+                    <h3 className='font-bold text-slate-800 mb-6 flex items-center gap-2'>
+                        <span className='w-2 h-6 bg-orange-600 rounded-full'></span>
+                        Production Entry
+                    </h3>
+
+                    <form onSubmit={handleSubmit} className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                        <div className='space-y-4'>
+                            <div>
+                                <label htmlFor='batchId' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Batch ID / Reference</label>
+                                <input type='text' name='batchId' value={formData.batchId} onChange={handleInputChange} placeholder='e.g. B-106' className='w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none' />
+                            </div>
+                        </div>
+
+                        <div className='space-y-4'>
+                            <div className='grid grid-cols-2 gap-4'>
+                                <div>
+                                    <label htmlFor='produced' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Actual Produced</label>
+                                    <input type='number' name='produced' value={formData.produced} onChange={handleInputChange} placeholder='0' className='w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg' />
+                                </div>
+
+                                <div>
+                                    <label htmlFor='wastage' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Wastage / Breakage</label>
+                                    <input type='number' name='wastage' value={formData.wastage} onChange={handleInputChange} placeholder='0' className='w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg' />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='w-full md:col-span-2'>
+                            <label htmlFor='type' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Brick Type</label>
+                            <select name='type' value={formData.type} onChange={handleInputChange} className='w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg'>
+                                <option>Standard Clay</option>
+                                <option>Fly Ash</option>
+                                <option>Refractory</option>
+                            </select>
+                        </div>
+
+                        <div className='md:col-span-2'>
+                            <button type='submit' className='w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-lg shadow-md transition-all active:scale-[0.98] hover:cursor-pointer'>
+                                Add Production Batch
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <div className='bg-card ml-4 mr-4 p-6 rounded-xl shadow-sm mt-8 mb-8'>
-                <div className='bg-white rounded-xl border border-slate-200 shadow-sm mt-8 overflow-hidden'>
-                    <div className='p-4 bg-slate-50 border-b border-slate-200'>
-                        <h3 className='font-bold text-slate-800'>Active Production Batches</h3>
-                    </div>
-
-                    <table className='w-full text-left'>
-                        <thead className='bg-slate-50/50'>
-                            <tr className='text-[11px] uppercase text-slate-500 font-bold tracking-wider'>
-                                <th className='p-4'>Batch ID</th>
-                                <th className='p-4'>Type</th>
-                                <th className='p-4'>Produced / Waste</th>
-                                <th className='p-4'>Yield</th>
-                                <th className='p-4'>Current Stage</th>
-                            </tr>
-                        </thead>
-        
-                        <tbody className='divide-y divide-slate-100'>
-                            {batches.map(batch => (
-                                <tr key={batch.id} className='text-sm hover:bg-slate-50 transition-colors'>
-                                    <td className='p-4 font-bold text-slate-900'>{batch.id}</td>
-                                    <td className='p-4 text-slate-600'>{batch.type}</td>
-                                    <td className='p-4'>
-                                    <span className='font-semibold text-slate-800'>{batch.qty}</span>
-                                    <span className='text-red-500 ml-2'>(-{batch.waste})</span>
-                                </td>
-                                <td className='p-4'>
-                                    <div className='w-full bg-slate-100 h-1.5 rounded-full overflow-hidden max-w-25'>
-                                        <div className='bg-emerald-500 h-full' style={{ width: `${((batch.qty - batch.waste) / batch.qty) * 100}%` }}></div>
-                                    </div>
-                                </td>
-                                <td className='p-4'><StageBadge stage={batch.stage} /></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <ProductionTable production={ production }/>
             </div>
         </div>
     );

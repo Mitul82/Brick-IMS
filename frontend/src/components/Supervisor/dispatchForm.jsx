@@ -1,8 +1,17 @@
 import React from 'react';
 import { Truck, Navigation, User, Hash } from 'lucide-react';
 
+import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
+
 function DispatchForm() {
-    const [formData, setFormData] = React.useState({ customer: '', vehicleNo: '', quantity: '', deliverySite: '', driverName: '', fuelIssued: '' });
+    const [formData, setFormData] = React.useState({ customer: '', vehicleNo: '', quantity: '', delivery: '', driverName: '', orderId: '' });
+    const [submit, setSubmit] = React.useState(false);
+
+    const { sendShipment, getShipments } = React.useContext(SupervisorContext);
+
+    React.useEffect(() => {
+        getShipments();
+    }, [submit]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -14,8 +23,17 @@ function DispatchForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        console.log('create supervisor context and send post req to backend');
+
+        try {
+            const success = await sendShipment(formData);
+
+            if(success) {
+                setSubmit(true);
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     return (
@@ -33,10 +51,10 @@ function DispatchForm() {
                     </div>
                 
                     <div>
-                        <label htmlFor='deliverySite' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Delivery Site</label>
+                        <label htmlFor='delivery' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Delivery Site</label>
                             <div className='relative'>
                                 <Navigation className='absolute left-3 top-3 text-slate-400' size={16} />
-                                <input type='text' name='deliverySite' value={formData.deliverySite} onChange={handleInputChange} placeholder='Sector 62, Noida' className='w-full p-2.5 pl-10 bg-slate-50 border border-slate-200 rounded-lg' />
+                                <input type='text' name='delivery' value={formData.delivery} onChange={handleInputChange} placeholder='Sector 62, Noida' className='w-full p-2.5 pl-10 bg-slate-50 border border-slate-200 rounded-lg' />
                             </div>
                     </div>
                 </div>
@@ -61,13 +79,13 @@ function DispatchForm() {
                         <label htmlFor='quantity' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Brick Quantity</label>
                         <div className='relative'>
                             <Hash className='absolute left-3 top-3 text-slate-400' size={16} />
-                            <input type='number' name='quantity' value={formData.quantity} onChange={handleInputChange} placeholder='5000' className='w-full p-2.5 pl-10 bg-slate-50 border border-slate-200 rounded-lg' />
+                            <input type='number' name='quantity' value={formData.quantity} onChange={handleInputChange} placeholder='eg. 5000 KG' className='w-full p-2.5 pl-10 bg-slate-50 border border-slate-200 rounded-lg' />
                         </div>
                     </div>
             
                     <div>
-                        <label htmlFor='fuelIssued' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Fuel Issued (Ltr)</label>
-                        <input type='number' name='fuelIssued' value={formData.fuelIssued} onChange={handleInputChange} placeholder='20' className='w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg' />
+                        <label htmlFor='orderId' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Order ID</label>
+                        <input type='text' name='orderId' value={formData.orderId} onChange={handleInputChange} placeholder='Eg. AFR-560093' className='w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg' />
                     </div>
                 </div>
 
