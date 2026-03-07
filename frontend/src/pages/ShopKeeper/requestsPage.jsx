@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RequestsTable from '../../components/shopkeeper/requestsTable';
+import RequestsTable from '../../components/shopkeeper/requestsTable.jsx';
 
 function RequestsPage() {
     return (

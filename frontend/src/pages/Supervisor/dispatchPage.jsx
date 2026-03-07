@@ -11,11 +11,35 @@ import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
 // ];
 
 function DispatchPage() {
-    const { shipments } = React.useContext(SupervisorContext);
+    const { shipments, getShipments } = React.useContext(SupervisorContext);
     
     const onDownloadPass = (item) => {
-        console.log('download', item);
+        if (!item.gatePassURL) {
+            toast.error("Gate pass file not found for this shipment.");
+            return;
+        }
+
+        try {
+            const downloadUrl = item.gatePassURL.replace('/upload/', '/upload/fl_attachment/');
+
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.setAttribute('download', `GatePass_${item.orderId}.pdf`);
+            link.setAttribute('target', '_blank');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            toast.success(`Downloading ${item.orderId}`);
+        } catch (error) {
+            console.error("Download failed:", error);
+            toast.error("Could not trigger download.");
+        }
     }
+
+    React.useEffect(() => {
+        getShipments();
+    }, []);
 
     return (
         <div className='flex flex-col'>
@@ -55,7 +79,7 @@ function DispatchPage() {
                                         <td className='p-4 text-sm font-medium text-slate-600'>{item.vehicleNo}</td>
                                         <td className='p-4 text-sm font-semibold text-slate-700'>{item.quantity.toLocaleString()} Bricks</td>
                                         <td className='p-4 text-center'>
-                                            <button onClick={() => onDownloadPass(item)} className='inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-orange-100 hover:text-orange-700 text-slate-600 text-xs font-bold rounded-lg transition-all'>
+                                            <button onClick={() => onDownloadPass(item)} disabled={!item.gatePassURL} className='inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-orange-100 hover:text-orange-700 text-slate-600 text-xs font-bold rounded-lg transition-all'>
                                                 <FileDown size={14} /> PDF Pass
                                             </button>
                                         </td>

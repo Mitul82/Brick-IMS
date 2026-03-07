@@ -10,6 +10,7 @@ import connectDB from './database/connectDB.js';
 
 import authRoutes from './routes/authRoutes.js';
 import supervisorRoutes from './routes/supervisorRoutes.js';
+import shopkeeperRoutes from './routes/shopkeeperRoutes.js';
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(rateLimit({
 
 app.use('/api/auth', authRoutes);
 app.use('/api/supervisor', supervisorRoutes);
+app.use('/api/shopkeeper', shopkeeperRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ success: false, message: 'Route not found' });

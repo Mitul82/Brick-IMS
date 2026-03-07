@@ -4,8 +4,8 @@ import { Truck, Navigation, User, Hash } from 'lucide-react';
 import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
 
 function DispatchForm() {
-    const [formData, setFormData] = React.useState({ customer: '', vehicleNo: '', quantity: '', delivery: '', driverName: '', orderId: '' });
     const [submit, setSubmit] = React.useState(false);
+    const [formData, setFormData] = React.useState({ customer: '', vehicleNo: '', quantity: '', delivery: '', driverName: '', orderId: '' });
 
     const { sendShipment, getShipments } = React.useContext(SupervisorContext);
 

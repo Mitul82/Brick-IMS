@@ -17,7 +17,7 @@ export const SupervisorProvider = ({ children }) => {
             const { data } = await axios.get('/api/supervisor/shipments');
 
             if(data.success) {
-                setShipments(data.shipments);
+                setShipments(data.resShipments);
 
                 toast.success(data.message);
 

@@ -13,7 +13,8 @@ const getShipments = async (req, res) => {
         res.status(200).json({ success: true, message: 'Retrived all Shipments', resShipments });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ success: false, message: err?.message });
+
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 
@@ -24,7 +25,8 @@ const getProduction = async (req, res) => {
         res.status(200).json({ success: true, message: 'Retrived all production batches', resProd });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ success: false, message: err?.message });
+
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 
@@ -35,7 +37,8 @@ const getRequests = async (req, res) =>  {
         res.status(200).json({ success: true, message: 'Retrived all requests', resRequest });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ success: false, message: err?.message });
+
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 
@@ -64,13 +67,16 @@ const addShipment = async (req, res) => {
         res.status(200).json({ success: true, message: 'New shipment log added', newShipment, resShipment });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ success: false, message: err?.message });
+
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 
 const addProduction = async (req, res) => {
     try {
         const { batchId, type, produced, wastage } = req.body;
+
+        console.log(req.body);
 
         if(!batchId || !type || !produced || !wastage) {
             return res.status(400).json({ success: false, message: 'Missing information' });
@@ -90,7 +96,8 @@ const addProduction = async (req, res) => {
 
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ success: false, message: err?.message });
+
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 
@@ -111,7 +118,8 @@ const addRequest = async (req, res) => {
         res.status(200).json({ success: true, message: 'Raised new request', newReq, resReq });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ success: false, message: err?.message });
+        
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 

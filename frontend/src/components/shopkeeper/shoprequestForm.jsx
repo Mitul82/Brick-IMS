@@ -1,8 +1,12 @@
 import React from 'react';
 import { Send, Info } from 'lucide-react';
 
+import { ShopKeeperContext } from '../../contexts/ShopKeeperContext.jsx';
+
 function QuickRequestForm() {
-    const [formData, setFormData] = React.useState({ type: '', quantity: '' });
+    const [formData, setFormData] = React.useState({ material: '', quantity: '' });
+
+    const { sendRequest } = React.useContext(ShopKeeperContext);
         
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -14,8 +18,16 @@ function QuickRequestForm() {
         
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        console.log('create shopkeepeer context and send post req to backend');
+        
+        try {
+            const success = await sendRequest(formData);
+
+            if(success) {
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     return (
@@ -29,8 +41,8 @@ function QuickRequestForm() {
             
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor='type' className='block text-[10px] font-bold text-slate-400 uppercase mb-1'>Material Required</label>
-                    <input name='type' value={formData.type} onChange={handleInputChange} placeholder='Eg. Coal' type='text' className='w-full p-2 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-orange-500'/>
+                    <label htmlFor='material' className='block text-[10px] font-bold text-slate-400 uppercase mb-1'>Material Required</label>
+                    <input name='material' value={formData.material} onChange={handleInputChange} placeholder='Eg. Coal' type='text' className='w-full p-2 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-orange-500'/>
                 </div>
 
                 <div>

@@ -4,7 +4,7 @@ import ProductionTable from '../../components/Supervisor/productionTable.jsx';
 import { SupervisorContext } from '../../contexts/SupervisorContext';
 
 function ProductionPage() {
-    const [formData, setFormData] = React.useState({ batchId: '', type: '', produced: '', wastage: '' });
+    const [formData, setFormData] = React.useState({ batchId: '', type: 'default', produced: '', wastage: '' });
     const [submit, setSubmit] = React.useState(false);
 
     const { sendProduction, getProduction, production } = React.useContext(SupervisorContext);
@@ -72,9 +72,10 @@ function ProductionPage() {
                         <div className='w-full md:col-span-2'>
                             <label htmlFor='type' className='block text-xs font-bold text-slate-500 uppercase mb-1'>Brick Type</label>
                             <select name='type' value={formData.type} onChange={handleInputChange} className='w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg'>
-                                <option>Standard Clay</option>
-                                <option>Fly Ash</option>
-                                <option>Refractory</option>
+                                <option value='default' disabled>--Select the type of Brick--</option>
+                                <option value='Standard Clay'>Standard Clay</option>
+                                <option value='Fly Ash'>Fly Ash</option>
+                                <option value='Refractory'>Refractory</option>
                             </select>
                         </div>
 

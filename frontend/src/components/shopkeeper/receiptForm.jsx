@@ -1,8 +1,17 @@
 import React from 'react';
 import { Truck, Scale } from 'lucide-react';
 
+import { ShopKeeperContext } from '../../contexts/ShopKeeperContext';
+
 function InwardEntryForm() {
-    const [formData, setFormData] = React.useState({ supplier: '', vehicleNo: '', type: '', quantity: '' });
+    const { getReceived, sendReceived } = React.useContext(ShopKeeperContext);
+
+    const [submit, setSubmit] = React.useState(false);
+    const [formData, setFormData] = React.useState({ supplier: '', vehicleNo: '', material: '', quantity: '' });
+
+    React.useEffect(() => {
+        getReceived();
+    }, [submit]);
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -14,8 +23,17 @@ function InwardEntryForm() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        console.log('create shopkeepeer context and send post req to backend');
+        
+        try {
+            const success = await sendReceived(formData);
+
+            if (success) {
+                setSubmit(true);
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     return (
@@ -40,8 +58,8 @@ function InwardEntryForm() {
                 <div className='space-y-4'>
                     <h4 className='text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b pb-1'>Material</h4>
                     <div>
-                        <label htmlFor='type' className='block text-xs font-semibold text-slate-600 mb-1'>Material Type</label>
-                        <input name='type' value={formData.type} onChange={handleInputChange} placeholder='Name of Material' className='w-full p-2 text-sm bg-slate-50 border rounded-lg text-primary'/>
+                        <label htmlFor='material' className='block text-xs font-semibold text-slate-600 mb-1'>Material Type</label>
+                        <input name='material' value={formData.material} onChange={handleInputChange} placeholder='Name of Material' className='w-full p-2 text-sm bg-slate-50 border rounded-lg text-primary'/>
                     </div>
                     <div className='flex gap-2'>
                         <input name='quantity' value={formData.quantity} onChange={handleInputChange} type='number' placeholder='Net Weight' className='flex-1 p-2 text-sm bg-slate-50 border rounded-lg text-primary' />

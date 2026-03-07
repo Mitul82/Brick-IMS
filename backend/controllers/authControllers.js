@@ -33,6 +33,8 @@ const login = async (req, res) => {
         res.status(200).json({ success: true, token, userData: resUser, message: 'Logged in successfully' });
     } catch (err) {
         console.error(err);
+        
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 
@@ -59,6 +61,8 @@ const signup = async (req, res) => {
         res.status(200).json({ success: true, token, userData: newUser, message: 'Account created succesfully' });
     } catch (err) {
         console.error(err);
+
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
     }
 }
 
