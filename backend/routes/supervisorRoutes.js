@@ -7,11 +7,11 @@ import { getShipments, getProduction, getRequests, addProduction, addShipment, a
 
 const router = express.Router();
 
-router.get('/shipments', authRoute, authRoles('Supervisor'), getShipments);
-router.post('/shipments', authRoute, authRoles('Supervisor'), addShipment);
-router.get('/production', authRoute, authRoles('Supervisor'), getProduction);
-router.post('/production', authRoute, authRoles('Supervisor'), addProduction);
-router.get('/requests', authRoute, authRoles('Supervisor'), getRequests);
-router.post('/requests', authRoute, authRoles('Supervisor'), addRequest);
+router.get('/shipments', authRoute, authRoles('Supervisor', 'Owner/Manager'), getShipments);
+router.post('/shipments', authRoute, authRoles('Supervisor', 'Owner/Manager'), addShipment);
+router.get('/production', authRoute, authRoles('Supervisor', 'Owner/Manager'), getProduction);
+router.post('/production', authRoute, authRoles('Supervisor', 'Owner/Manager'), addProduction);
+router.get('/requests', authRoute, authRoles('Supervisor', 'Owner/Manager'), getRequests);
+router.post('/requests', authRoute, authRoles('Supervisor', 'Owner/Manager'), addRequest);
 
 export default router;

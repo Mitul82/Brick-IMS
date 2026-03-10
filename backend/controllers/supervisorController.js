@@ -32,7 +32,7 @@ const getProduction = async (req, res) => {
 
 const getRequests = async (req, res) =>  {
     try {
-        const resRequest = await Requests.find();
+        const resRequest = await Requests.find().populate('requestedBy');
 
         res.status(200).json({ success: true, message: 'Retrived all requests', resRequest });
     } catch (err) {
@@ -76,8 +76,6 @@ const addProduction = async (req, res) => {
     try {
         const { batchId, type, produced, wastage } = req.body;
 
-        console.log(req.body);
-
         if(!batchId || !type || !produced || !wastage) {
             return res.status(400).json({ success: false, message: 'Missing information' });
         }
@@ -111,7 +109,7 @@ const addRequest = async (req, res) => {
 
         const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        const newReq = await Requests.create({ material, quantity, reason, date });
+        const newReq = await Requests.create({ material, quantity, reason, date, requestedBy: req.user.id });
 
         const resReq = await Requests.find();
 

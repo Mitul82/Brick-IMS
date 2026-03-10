@@ -1,20 +1,29 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
-const mockData = [
-  { batch: 'B-101', total: 5000, waste: 450, cost: 1200 },
-  { batch: 'B-102', total: 5200, waste: 300, cost: 1150 },
-  { batch: 'B-103', total: 4800, waste: 800, cost: 1400 },
-  { batch: 'B-104', total: 5100, waste: 200, cost: 1100 },
-  { batch: 'B-105', total: 5300, waste: 150, cost: 1050 },
-];
+import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
 
 function OwnerChart() {
+  const { getProduction, production } = React.useContext(SupervisorContext);
+
+  React.useEffect(() => {
+    getProduction();
+  }, []);
+
+  const chartData = React.useMemo(() => {
+    if (!production || !Array.isArray(production)) return [];
+        return production.map(item => ({
+            batch: item.batchId,
+            total: item.produced,
+            waste: item.wastage
+    }));
+  }, [production]);
+
   return (
     <div style={{ width: '100%', height: 400, backgroundColor: '#fff', padding: '20px', borderRadius: '8px' }}>
         <h3 style={{ fontFamily: 'sans-serif', marginBottom: '20px' }}>Kiln Production Efficiency</h3>
         <ResponsiveContainer width='100%' height='100%'>
-            <BarChart data={mockData}>
+            <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray='3 3' vertical={false} />
                 <XAxis dataKey='batch' />
                 <YAxis />

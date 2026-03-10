@@ -1,6 +1,16 @@
-function ApprovalCard({ item, quantity, requestedBy }) {
+import React from 'react';
+
+import { OwnerContext } from '../../contexts/OwnerContext.jsx';
+
+function ApprovalCard({ item, quantity, requestedBy, id }) {
+    const { updateRequest } = React.useContext(OwnerContext);
+
     const onApprove = async() => {
-        console.log('send update request to the backend from manager context to approve the request raised');
+        updateRequest({ status: 'Approved', id });
+    }
+
+    const onReject = async () => {
+        updateRequest({ status: 'Rejected', id });
     }
 
     return (
@@ -11,7 +21,9 @@ function ApprovalCard({ item, quantity, requestedBy }) {
             </div>
 
             <div className='flex gap-2'>
-                <button className='px-3 py-1.5 text-xs font-bold text-red-600 border border-red-200 rounded hover:bg-red-50'>Reject</button>
+                <button onClick={onReject} className='px-3 py-1.5 text-xs font-bold text-red-600 border border-red-200 rounded hover:bg-red-50'>
+                    Reject
+                </button>
                 <button onClick={onApprove} className='px-3 py-1.5 text-xs font-bold text-white bg-emerald-600 rounded hover:bg-emerald-700 shadow-sm'>
                     Approve
                 </button>

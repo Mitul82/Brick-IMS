@@ -2,11 +2,6 @@ import React from 'react';
 
 import { ShopKeeperContext } from '../../contexts/ShopKeeperContext';
 
-// const recentInwards = [
-//   { id: 'GRN-501', supplier: 'Jindal Coal Ltd.', material: 'Coal', qty: '12 Tons', time: '10:30 AM' },
-//   { id: 'GRN-502', supplier: 'UltraTech Cement', material: 'Cement', qty: '50 Bags', time: '11:45 AM' },
-// ];
-
 function InwardHistoryTable() {
     const { getReceived, received } = React.useContext(ShopKeeperContext);
 

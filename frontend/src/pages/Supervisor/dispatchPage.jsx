@@ -4,18 +4,12 @@ import { FileDown, MapPin, Truck, CheckCircle2, Clock, AlertCircle } from 'lucid
 import DispatchForm from '../../components/Supervisor/dispatchForm';
 import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
 
-// const dispatches = [
-//     { id: 'GP-9021', customer: 'Build-Right Const.', site: 'Sector 62, Noida', vehicle: 'UP-16-AX-1234', qty: 5000, status: 'In-Transit' },
-//     { id: 'GP-9020', customer: 'Metro Project', site: 'Alpha 1', vehicle: 'DL-1C-BK-8890', qty: 7500, status: 'Delivered' },
-//     { id: 'GP-9019', customer: 'Global Infra', site: 'Knowledge Park', vehicle: 'UP-16-TT-4432', qty: 10000, status: 'Loading' },
-// ];
-
 function DispatchPage() {
     const { shipments, getShipments } = React.useContext(SupervisorContext);
     
     const onDownloadPass = (item) => {
         if (!item.gatePassURL) {
-            toast.error("Gate pass file not found for this shipment.");
+            toast.error('Gate pass file not found for this shipment.');
             return;
         }
 
@@ -32,8 +26,8 @@ function DispatchPage() {
             
             toast.success(`Downloading ${item.orderId}`);
         } catch (error) {
-            console.error("Download failed:", error);
-            toast.error("Could not trigger download.");
+            console.error('Download failed:', error);
+            toast.error('Could not trigger download.');
         }
     }
 

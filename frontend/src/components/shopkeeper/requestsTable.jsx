@@ -1,12 +1,6 @@
 import React from 'react';
 import { Clock, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 
-const myRequests = [
-    { id: 'REQ-8801', item: 'Cement', qty: '50 Bags', urgency: 'Urgent', status: 'Pending', date: '2026-03-04' },
-    { id: 'REQ-8795', item: 'Coal', qty: '10 Tons', urgency: 'Normal', status: 'Approved', date: '2026-03-02' },
-    { id: 'REQ-8790', item: 'Lubricants', qty: '5 Ltrs', urgency: 'Normal', status: 'Rejected', date: '2026-03-01' },
-];
-
 const StatusPill = ({ status }) => {
     const config = {
         'Pending': { color: 'text-amber-600 bg-amber-50 border-amber-100', icon: <Clock size={14} /> },
@@ -23,7 +17,7 @@ const StatusPill = ({ status }) => {
     );
 };
 
-function RequestsTable() {
+function RequestsTable({ requests }) {
     return (
         <div className='bg-white rounded-xl border border-slate-200 shadow-sm overflow-scroll'>
             <div className='p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center'>
@@ -42,11 +36,11 @@ function RequestsTable() {
                 </thead>
         
                 <tbody className='divide-y divide-slate-100'>
-                    {myRequests.map((req) => (
-                        <tr key={req.id} className='hover:bg-slate-50/30 transition-colors text-sm'>
-                            <td className='p-4 font-mono font-bold text-primary'>{req.id}</td>
-                            <td className='p-4 font-semibold text-slate-700'>{req.item}</td>
-                            <td className='p-4 text-slate-600'>{req.qty}</td>
+                    {requests.map((req) => (
+                        <tr key={req._id} className='hover:bg-slate-50/30 transition-colors text-sm'>
+                            <td className='p-4 font-mono font-bold text-primary'>{req._id}</td>
+                            <td className='p-4 font-semibold text-slate-700'>{req.material}</td>
+                            <td className='p-4 text-slate-600'>{req.quantity}</td>
                             <td className='p-4'><StatusPill status={req.status} /></td>
                             <td className='p-4 text-right text-slate-400'>{req.date}</td>
                         </tr>

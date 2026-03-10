@@ -3,13 +3,6 @@ import { Clock, CheckCircle2, XCircle, PackageCheck, User } from 'lucide-react';
 
 import { SupervisorContext } from '../../contexts/SupervisorContext.jsx';
 
-// const raisedRequests = [
-//     { id: 'REQ-101', item: 'Coal (Grade A)', qty: '5 Tons', date: '2026-03-01', status: 'Pending', requestedBy: 'Supervisor Anil' },
-//     { id: 'REQ-098', item: 'Portland Cement', qty: '50 Bags', date: '2026-02-28', status: 'Approved', requestedBy: 'Supervisor Anil' },
-//     { id: 'REQ-095', item: 'Fine Sand', qty: '2 Trucks', date: '2026-02-25', status: 'Approved', requestedBy: 'Supervisor Anil' },
-//     { id: 'REQ-092', item: 'Additives', qty: '10 Liters', date: '2026-02-24', status: 'Rejected', requestedBy: 'Supervisor Anil' },
-// ];
-
 const RequestStatus = ({ status }) => {
     const config = {
         'Pending': { color: 'text-amber-600 bg-amber-50 border-amber-100', icon: <Clock size={14} /> },
@@ -78,35 +71,35 @@ function InventoryPage() {
             </div>
 
             <div className='bg-card ml-4 mr-4 p-6 rounded-xl shadow-sm mt-8 mb-8'>
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                        <h3 className="font-bold text-slate-800">Material Request History</h3>
+                <div className='bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden'>
+                    <div className='p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center'>
+                        <h3 className='font-bold text-slate-800'>Material Request History</h3>
                     </div>
                     
-                    <table className="w-full text-left border-collapse">
+                    <table className='w-full text-center border-collapse'>
                         <thead>
-                            <tr className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wider font-semibold">
-                                <th className="p-4 border-b border-slate-100">Request ID</th>
-                                <th className="p-4 border-b border-slate-100">Material Item</th>
-                                <th className="p-4 border-b border-slate-100">Qty</th>
-                                <th className="p-4 border-b border-slate-100">Date Raised</th>
-                                <th className="p-4 border-b border-slate-100">Status</th>
-                                <th className="p-4 border-b border-slate-100 text-right">Progress</th>
+                            <tr className='bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wider font-semibold'>
+                                <th className='p-4 border-b border-slate-100'>Request ID</th>
+                                <th className='p-4 border-b border-slate-100'>Material Item</th>
+                                <th className='p-4 border-b border-slate-100'>Qty</th>
+                                <th className='p-4 border-b border-slate-100'>Date Raised</th>
+                                <th className='p-4 border-b border-slate-100'>Status</th>
+                                <th className='p-4 border-b border-slate-100 text-right'>Progress</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100 text-sm">
+                        <tbody className='divide-y divide-slate-100 text-sm text-center'>
                             {requests?.map((req) => (
-                                <tr key={req.id} className="hover:bg-slate-50/50 transition-colors">
-                                    <td className="p-4 font-mono font-medium text-blue-600">{req._id}</td>
-                                    <td className="p-4 font-semibold text-slate-700">{req.material}</td>
-                                    <td className="p-4 text-slate-600">{req.quantity}</td>
-                                    <td className="p-4 text-slate-500">{req.date}</td>
-                                    <td className="p-4"><RequestStatus status={req.status} /></td>
-                                    <td className="p-4 text-right">
-                                        <div className="flex items-center justify-end gap-1">
-                                            <div className={`h-1.5 w-8 rounded ${req.status !== 'Rejected' ? 'bg-emerald-500' : 'bg-slate-200'}`} title="Requested"></div>
-                                            <div className={`h-1.5 w-8 rounded ${['Approved', 'Fulfilled'].includes(req.status) ? 'bg-emerald-500' : 'bg-slate-200'}`} title="Manager Approved"></div>
-                                            <div className={`h-1.5 w-8 rounded ${req.status === 'Fulfilled' ? 'bg-emerald-500' : 'bg-slate-200'}`} title="Stock Received"></div>
+                                <tr key={req.id} className='hover:bg-slate-50/50 transition-colors'>
+                                    <td className='p-4 font-mono font-medium text-blue-600'>{req._id}</td>
+                                    <td className='p-4 font-semibold text-slate-700'>{req.material}</td>
+                                    <td className='p-4 text-slate-600'>{req.quantity}</td>
+                                    <td className='p-4 text-slate-500'>{req.date}</td>
+                                    <td className='p-4'><RequestStatus status={req.status} /></td>
+                                    <td className='p-4 text-right'>
+                                        <div className='flex items-center justify-end gap-1'>
+                                            <div className={`h-1.5 w-8 rounded ${req.status !== 'Rejected' ? 'bg-emerald-500' : 'bg-red-600'}`} title='Requested'></div>
+                                            <div className={`h-1.5 w-8 rounded ${['Approved', 'Approved'].includes(req.status) ? 'bg-emerald-500' : 'bg-red-600'}`} title='Manager Approved'></div>
+                                            <div className={`h-1.5 w-8 rounded ${req.status === 'Approved' ? 'bg-emerald-500' : 'bg-red-600'}`} title='Stock Received'></div>
                                         </div>
                                     </td>
                                 </tr>

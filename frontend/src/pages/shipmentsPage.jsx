@@ -8,7 +8,7 @@ import { ShopKeeperContext } from '../contexts/ShopKeeperContext.jsx';
 
 function ShipmentsPage() {
     const { user } = React.useContext(AuthContext);
-    // const ownerData = React.useContext(OwnerContext);
+    const ownerData = React.useContext(OwnerContext);
     const supervisorData = React.useContext(SupervisorContext);
     const shopkeeperData = React.useContext(ShopKeeperContext);
 

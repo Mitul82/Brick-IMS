@@ -2,11 +2,6 @@ import React from 'react';
 
 import { ShopKeeperContext } from '../../contexts/ShopKeeperContext';
 
-// const recentOutwards = [
-//   { id: 'ISS-201', batch: 'B-106', material: 'Coal', qty: '2 Tons', issuer: 'Supervisor Rajesh', time: '09:15 AM' },
-//   { id: 'ISS-202', batch: 'B-107', material: 'Cement', qty: '10 Bags', issuer: 'Supervisor Vikram', time: '11:30 AM' },
-// ];
-
 function IssuanceTable() {
     const { issued, getIssued } = React.useContext(ShopKeeperContext);
 

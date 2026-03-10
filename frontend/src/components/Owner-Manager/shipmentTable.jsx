@@ -4,35 +4,6 @@ import { MapPin, AlertTriangle, Clock, CheckCircle, Truck, ArrowLeft, FileDown }
 
 import { AuthContext } from '../../contexts/authContext';
 
-// const shipments = [
-//     { id: 'SH-4021', customer: 'Build-Right Const.', site: 'Sector 62, Noida', quantity: '5000', status: 'In-Transit', driver: 'Rajesh' },
-//     { id: 'SH-4022', customer: 'Shivaay Bricks', site: 'Knowledge Park', quantity: '2500', status: 'Delivered', driver: 'Amit' },
-//     { id: 'SH-4023', customer: 'Global Infra', site: 'Greater Noida West', quantity: '10000', status: 'Loading', driver: 'Vikram' },
-//     { id: 'SH-4024', customer: 'Metro Project', site: 'Alpha 1', quantity: '7500', status: 'Delayed', driver: 'Suresh' },
-// ];
-
-const StatusBadge = ({ status }) => {
-    const styles = {
-        'Delivered': 'bg-emerald-100 text-emerald-700 border-emerald-200',
-        'In-Transit': 'bg-blue-100 text-blue-700 border-blue-200',
-        'Loading': 'bg-amber-100 text-amber-700 border-amber-200',
-        'Delayed': 'bg-red-100 text-red-700 border-red-200',
-    };
-
-    const icons = {
-        'Delivered': <CheckCircle size={14} />,
-        'In-Transit': <Truck size={14} />,
-        'Loading': <Clock size={14} />,
-        'Delayed': <AlertTriangle size={14} />,
-    };
-
-    return (
-        <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${styles[status]}`}>
-            {icons[status]} {status}
-        </span>
-    );
-};
-
 function ShipmentTable({ loading, shipments }) {
     const location = useLocation();
 
@@ -40,7 +11,7 @@ function ShipmentTable({ loading, shipments }) {
 
     const onDownloadPass = (item) => {
         if (!item.gatePassURL) {
-            toast.error("Gate pass file not found for this shipment.");
+            toast.error('Gate pass file not found for this shipment.');
             return;
         }
 
@@ -57,8 +28,8 @@ function ShipmentTable({ loading, shipments }) {
             
             toast.success(`Downloading ${item.orderId}`);
         } catch (error) {
-            console.error("Download failed:", error);
-            toast.error("Could not trigger download.");
+            console.error('Download failed:', error);
+            toast.error('Could not trigger download.');
         }
     }
 

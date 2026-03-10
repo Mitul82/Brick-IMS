@@ -9,6 +9,7 @@ export const ShopKeeperProvider = ({ children }) => {
     const [shipments, setShipments] = React.useState([]);
     const [received, setReceived] = React.useState([]);
     const [issued, setIssued] = React.useState([]);
+    const [requests, setRequests] = React.useState([]);
 
     const { axios, user } = React.useContext(AuthContext);
 
@@ -84,6 +85,28 @@ export const ShopKeeperProvider = ({ children }) => {
         }
     });
 
+    const getRequests = React.useCallback(async () => {
+        try {
+            const { data } = await axios.get('/api/shopkeeper/requests');
+
+            if(data.success) {
+                setRequests(data.resRequest);
+
+                toast.success(data.message);
+
+                return true;
+            }
+        } catch (err) {
+            console.error(err);
+
+            const errMessage = err.response?.data?.message || 'Something wnet wrong';
+            
+            toast.error(errMessage);
+
+            return false;
+        }
+    });
+
     const sendReceived = React.useCallback(async (formData) => {
         try {
             const { data } = await axios.post('/api/shopkeeper/received', formData);
@@ -153,8 +176,8 @@ export const ShopKeeperProvider = ({ children }) => {
     });
 
     const value = React.useMemo(() => ({
-        shipments, received, issued,
-        getShipments, getReceived, getIssued,
+        shipments, received, issued, requests,
+        getShipments, getReceived, getIssued, getRequests,
         sendReceived, sendIssued, sendRequest
     }));
     

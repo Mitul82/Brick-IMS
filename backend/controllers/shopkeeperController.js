@@ -41,6 +41,18 @@ const getIssued = async (req, res) => {
     }
 }
 
+const getRequests = async(req, res) => {
+    try {
+        const resRequest = await Requests.find().populate('requestedBy');
+
+        return res.status(200).json({ success: true, message: 'Retreived all requests', resRequest });
+    } catch (err) {
+        console.error(err);
+
+        return res.status(500).json({ success: false, message: err.message ? err?.message : 'Internal server error' });
+    }
+}
+
 const addReceived = async (req, res) => {
     try {
         const { supplier, material, vehicleNo, quantity } = req.body;
@@ -117,7 +129,7 @@ const addRequest = async (req, res) => {
 
         const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        const newReq = await Requests.create({ material, quantity, date });
+        const newReq = await Requests.create({ material, quantity, date, requestedBy: req.user.id });
 
         const resReq = await Requests.find();
 
@@ -129,4 +141,4 @@ const addRequest = async (req, res) => {
     }
 }
 
-export { getShipments, getReceived, getIssued, addReceived, addIssued, addRequest }
+export { getShipments, getReceived, getIssued, getRequests, addReceived, addIssued, addRequest }
